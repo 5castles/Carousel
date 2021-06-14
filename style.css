@@ -3,11 +3,40 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     font-family: "Varela Round", sans-serif;
-  }
-  
-  h1 {
+}
+
+h1 {
     font-family: "Pacifico", cursive;
     text-align: center;
     font-size: 72px;
-  }
-  
+    margin-bottom: 20px;
+}
+section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+section i{
+      font-size: 50px;
+      color: white;
+}
+.js-main-box{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.image-box{
+    margin: 0 150px;
+}
+
+.js-dot-box{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer{
+      margin-top: 30px;
+      padding: 0 40%;
+}
