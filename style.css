@@ -40,3 +40,9 @@ footer{
       margin-top: 30px;
       padding: 0 40%;
 }
+footer i{
+    color: rgba(0,0,0,0.5);
+}
+.clicked-color{
+    color:blue;
+}

@@ -2,8 +2,12 @@ const mainBox = document.querySelector(".js-main-box"),
     previousBtn = mainBox.querySelector(".btn-previous"),
     nextBtn = mainBox.querySelector(".btn-next"),
     imgBox = document.querySelector(".image-box"),
-    img = imgBox.querySelector("img");
+    img = imgBox.querySelector("img"),
+    dotBox = document.querySelector(".js-dot-box");
+    indexBtn = dotBox.getElementsByClassName("img-index-btn");
 
+
+const IMG_NUMBER = 5;
 
 
 
@@ -16,20 +20,57 @@ const mainBox = document.querySelector(".js-main-box"),
 
 
 function handleClickPreviousBtn(){
-     const src = img.src;
-     console.log(src)
-     const next = src[src.length -5]; // img name 숫자 가져오기
-     console.log(next)
-    //img.src=`images/image-${}.png`
+    const src = img.src;
+    const currentImgNumber= src[src.length -5]; // img name 숫자 가져오기
+    let changeNumber = parseInt(currentImgNumber) - 1;
+    if(changeNumber < 1){
+        const renewNumber = changeNumber = 5;
+        img.src=`images/image-${renewNumber}.png`
+    } else{
+       img.src=`images/image-${changeNumber}.png`
+    }
 }
 
 function handleClickNextBtn(){
+    const src = img.src;
+    const currentImgNumber= src[src.length -5]; // img name 숫자 가져오기
+    let changeNumber = parseInt(currentImgNumber) + 1;
+    if(changeNumber > IMG_NUMBER){
+        const renewNumber = changeNumber = 1;
+        img.src=`images/image-${renewNumber}.png`
+    } else{
+       img.src=`images/image-${changeNumber}.png`
+    }
+}
+
+function selectDots(group){
+    const length = group.length;
+    for(i=0; i < length; i++){        
+       group[i].addEventListener("click", handleClickIndexBtn);
+    }
+}
+function handleClickIndexBtn(event){
+    //전체 Dot Color 리셋
+    indexBtn.forEach(function(anything){
+        anything.classList.add("clicked-color");
+    })
+    const dotBtn = event.target;
+    console.log(dotBtn.classList)
+    dotBtn.classList.add("clicked-color");        //classList.add() 형식 기억하자
+    
+    const idNumber = event.target.id;
+    img.src=`images/image-${idNumber}.png`
 
 }
 
 function init(){
+    selectDots(indexBtn);
     previousBtn.addEventListener("click", handleClickPreviousBtn);
     nextBtn.addEventListener("click", handleClickNextBtn);
+    
+    
 }
 
 init();
+
+
