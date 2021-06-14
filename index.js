@@ -6,71 +6,74 @@ const mainBox = document.querySelector(".js-main-box"),
     dotBox = document.querySelector(".js-dot-box");
     indexBtn = dotBox.getElementsByClassName("img-index-btn");
 
-
 const IMG_NUMBER = 5;
-
-
-
-// 이미지 변경은 아래와 같이 이미지 요소의 src를 변경하는 방식으로 하는 것을 권장합니다.
-// someImageElement.src = "/images/image-1.png";
-
-
-// 화살표 버튼 클릭 -> 이미지 키/값 가져오기 -> +1  혹은 -1 하기 -> 소스 변경 = 이미지 변경              (Number 순서)  % 5
-
+const CLICKED_DOT_CN = "clicked-color";
 
 
 function handleClickPreviousBtn(){
     const src = img.src;
     const currentImgNumber= src[src.length -5]; // img name 숫자 가져오기
     let changeNumber = parseInt(currentImgNumber) - 1;
+    //첫번째 이미지요소 도달 -> 마지막 이미지로 순환, Dot 업데이트
     if(changeNumber < 1){
-        const renewNumber = changeNumber = 5;
+        const renewNumber = changeNumber = IMG_NUMBER;
         img.src=`images/image-${renewNumber}.png`
+        removeClasses(indexBtn);
+        indexBtn[renewNumber-1].classList.add(CLICKED_DOT_CN);
     } else{
-       img.src=`images/image-${changeNumber}.png`
+        img.src=`images/image-${changeNumber}.png`
+        removeClasses(indexBtn);
+        indexBtn[changeNumber-1].classList.add(CLICKED_DOT_CN);
     }
 }
 
 function handleClickNextBtn(){
     const src = img.src;
-    const currentImgNumber= src[src.length -5]; // img name 숫자 가져오기
+    const currentImgNumber= src[src.length -5]; // img Number 가져오기
     let changeNumber = parseInt(currentImgNumber) + 1;
+    //마지막 이미지요소 도달 -> 첫번째 이미지로 순환, Dot 업데이트
     if(changeNumber > IMG_NUMBER){
         const renewNumber = changeNumber = 1;
         img.src=`images/image-${renewNumber}.png`
+        removeClasses(indexBtn);
+        indexBtn[renewNumber-1].classList.add(CLICKED_DOT_CN);
     } else{
-       img.src=`images/image-${changeNumber}.png`
+        img.src=`images/image-${changeNumber}.png`
+        removeClasses(indexBtn);
+        indexBtn[changeNumber-1].classList.add(CLICKED_DOT_CN);
     }
 }
 
-function selectDots(group){
-    const length = group.length;
+//전체 Dot 대상 "click" 이벤트리스너 개별생성
+function addDotEventListner(array){
+    const length = array.length;
     for(i=0; i < length; i++){        
-       group[i].addEventListener("click", handleClickIndexBtn);
+        array[i].addEventListener("click", handleClickIndexBtn);
     }
 }
+//전체 Dot Color 리셋
+function removeClasses(array){
+    const length = array.length;
+    for(i=0; i < length; i++){        
+        array[i].classList.remove(CLICKED_DOT_CN);
+    }
+}
+
 function handleClickIndexBtn(event){
-    //전체 Dot Color 리셋
-    indexBtn.forEach(function(anything){
-        anything.classList.add("clicked-color");
-    })
+    //전체 Dot Color 리셋 실행
+    removeClasses(indexBtn);
+    //클릭된 Dot - Color 페인팅 
     const dotBtn = event.target;
-    console.log(dotBtn.classList)
-    dotBtn.classList.add("clicked-color");        //classList.add() 형식 기억하자
-    
+    dotBtn.classList.add(CLICKED_DOT_CN);        //classList.add() 형식 기억하자
     const idNumber = event.target.id;
     img.src=`images/image-${idNumber}.png`
 
 }
 
 function init(){
-    selectDots(indexBtn);
+    addDotEventListner(indexBtn);
     previousBtn.addEventListener("click", handleClickPreviousBtn);
     nextBtn.addEventListener("click", handleClickNextBtn);
-    
-    
 }
 
 init();
-
-
